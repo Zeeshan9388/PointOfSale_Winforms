@@ -1,0 +1,1429 @@
+﻿USE [master]
+GO
+/****** Object:  Database [dbPOS]    Script Date: 4/12/2023 12:17:54 PM ******/
+CREATE DATABASE [dbPOS]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'dbPOS', FILENAME = N'F:\Installed_software\SQLServer2022\MSSQL16.MSSQLSERVER\MSSQL\DATA\dbPOS.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'dbPOS_log', FILENAME = N'F:\Installed_software\SQLServer2022\MSSQL16.MSSQLSERVER\MSSQL\DATA\dbPOS_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+ WITH CATALOG_COLLATION = DATABASE_DEFAULT, LEDGER = OFF
+GO
+ALTER DATABASE [dbPOS] SET COMPATIBILITY_LEVEL = 160
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [dbPOS].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [dbPOS] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [dbPOS] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [dbPOS] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [dbPOS] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [dbPOS] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [dbPOS] SET AUTO_CLOSE OFF 
+GO
+ALTER DATABASE [dbPOS] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [dbPOS] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [dbPOS] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [dbPOS] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [dbPOS] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [dbPOS] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [dbPOS] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [dbPOS] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [dbPOS] SET  ENABLE_BROKER 
+GO
+ALTER DATABASE [dbPOS] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [dbPOS] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [dbPOS] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [dbPOS] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [dbPOS] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [dbPOS] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [dbPOS] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [dbPOS] SET RECOVERY FULL 
+GO
+ALTER DATABASE [dbPOS] SET  MULTI_USER 
+GO
+ALTER DATABASE [dbPOS] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [dbPOS] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [dbPOS] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [dbPOS] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+ALTER DATABASE [dbPOS] SET DELAYED_DURABILITY = DISABLED 
+GO
+ALTER DATABASE [dbPOS] SET ACCELERATED_DATABASE_RECOVERY = OFF  
+GO
+EXEC sys.sp_db_vardecimal_storage_format N'dbPOS', N'ON'
+GO
+ALTER DATABASE [dbPOS] SET QUERY_STORE = ON
+GO
+ALTER DATABASE [dbPOS] SET QUERY_STORE (OPERATION_MODE = READ_WRITE, CLEANUP_POLICY = (STALE_QUERY_THRESHOLD_DAYS = 30), DATA_FLUSH_INTERVAL_SECONDS = 900, INTERVAL_LENGTH_MINUTES = 60, MAX_STORAGE_SIZE_MB = 1000, QUERY_CAPTURE_MODE = AUTO, SIZE_BASED_CLEANUP_MODE = AUTO, MAX_PLANS_PER_QUERY = 200, WAIT_STATS_CAPTURE_MODE = ON)
+GO
+USE [dbPOS]
+GO
+/****** Object:  UserDefinedTableType [dbo].[SelectedItems]    Script Date: 4/12/2023 12:17:55 PM ******/
+CREATE TYPE [dbo].[SelectedItems] AS TABLE(
+	[CatID] [int] NOT NULL,
+	[ItemID] [int] NOT NULL,
+	[SizeID] [int] NOT NULL,
+	[Price] [int] NOT NULL,
+	[Qty] [int] NOT NULL
+)
+GO
+/****** Object:  Table [dbo].[tbl_ItemCategory]    Script Date: 4/12/2023 12:17:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbl_ItemCategory](
+	[ID] [bigint] IDENTITY(1,1) NOT NULL,
+	[Category] [nvarchar](50) NULL,
+	[CreatedBy] [int] NULL,
+	[CreatedDate] [date] NULL,
+	[UpdatedBy] [int] NULL,
+	[UpdatedDate] [date] NULL,
+	[IsActive] [bit] NULL,
+ CONSTRAINT [PK_tbl_ItemCategory] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  View [dbo].[Vu_Category]    Script Date: 4/12/2023 12:17:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE VIEW [dbo].[Vu_Category]
+AS
+SELECT dbo.tbl_ItemCategory.*
+FROM   dbo.tbl_ItemCategory
+WHERE  IsActive = 1;
+
+GO
+/****** Object:  Table [dbo].[tbl_User]    Script Date: 4/12/2023 12:17:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbl_User](
+	[ID] [bigint] IDENTITY(1,1) NOT NULL,
+	[RoleID] [bigint] NULL,
+	[Username] [nvarchar](50) NULL,
+	[UPassword] [nvarchar](50) NULL,
+	[UEmail] [nvarchar](50) NULL,
+	[UCell] [nvarchar](50) NULL,
+	[UPic] [nvarchar](max) NULL,
+	[CreatedDate] [date] NULL,
+	[ModifiedDate] [date] NULL,
+	[IsActive] [bit] NULL,
+ CONSTRAINT [PK_tbl_User] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbl_Items]    Script Date: 4/12/2023 12:17:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbl_Items](
+	[ID] [bigint] IDENTITY(1,1) NOT NULL,
+	[Items] [nvarchar](50) NULL,
+	[CatID] [bigint] NULL,
+	[CreatedBy] [int] NULL,
+	[CreatedDate] [date] NULL,
+	[UpdatedBy] [int] NULL,
+	[UpdatedDate] [date] NULL,
+	[IsActive] [bit] NULL,
+ CONSTRAINT [PK_tbl_Items] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  View [dbo].[Vu_Items]    Script Date: 4/12/2023 12:17:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE VIEW [dbo].[Vu_Items]
+AS
+SELECT items.ID,
+       category.Category,
+       items.Items,
+       items.CreatedBy,
+       CAST (items.CreatedDate AS NVARCHAR) AS 'CreatedDate',
+       items.UpdatedBy,
+       CAST (items.UpdatedDate AS NVARCHAR) AS 'UpdatedDate'
+FROM   dbo.tbl_Items AS items
+       INNER JOIN
+       dbo.tbl_ItemCategory AS category
+       ON items.CatID = category.ID
+       LEFT OUTER JOIN
+       tbl_User AS users
+       ON items.CreatedBy = users.ID
+          OR items.UpdatedBy = users.ID
+WHERE  items.IsActive = 1;
+
+GO
+/****** Object:  Table [dbo].[tbl_Size]    Script Date: 4/12/2023 12:17:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbl_Size](
+	[ID] [bigint] IDENTITY(1,1) NOT NULL,
+	[CatID] [bigint] NOT NULL,
+	[ItemID] [bigint] NOT NULL,
+	[Size] [nvarchar](max) NOT NULL,
+	[Price] [decimal](18, 5) NOT NULL,
+	[Qty] [decimal](18, 2) NOT NULL,
+	[PurchaseTotal]  AS ([Price]*[Qty]),
+	[RetailPrice] [decimal](18, 5) NULL,
+	[RetailTotal]  AS ([RetailPrice]*[Qty]),
+	[CreatedBy] [int] NULL,
+	[CreatedDate] [date] NULL,
+	[UpdatedBy] [int] NULL,
+	[UpdatedDate] [nvarchar](max) NULL,
+	[IsActive] [bit] NULL,
+ CONSTRAINT [PK_tbl_Size] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbl_SalesDetails]    Script Date: 4/12/2023 12:17:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbl_SalesDetails](
+	[SalesID] [bigint] NOT NULL,
+	[CustID] [bigint] NULL,
+	[GrossTotal] [decimal](18, 5) NULL,
+	[GST] [decimal](18, 5) NULL,
+	[Total] [decimal](18, 5) NULL,
+	[PayAmount] [decimal](18, 5) NULL,
+	[ReturnAmount] [decimal](18, 5) NULL,
+	[CreatedBy] [int] NULL,
+	[CreatedDate] [date] NULL,
+	[UpdatedBy] [int] NULL,
+	[UpdatedDate] [date] NULL,
+ CONSTRAINT [PK_tbl_SalesDetails] PRIMARY KEY CLUSTERED 
+(
+	[SalesID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbl_Sales]    Script Date: 4/12/2023 12:17:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbl_Sales](
+	[ID] [bigint] IDENTITY(1,1) NOT NULL,
+	[SaleID] [bigint] NOT NULL,
+	[CatID] [bigint] NOT NULL,
+	[ItemID] [bigint] NOT NULL,
+	[SizeID] [bigint] NOT NULL,
+	[Price] [decimal](18, 2) NOT NULL,
+	[Qty] [decimal](18, 2) NOT NULL,
+	[Total]  AS ([Price]*[Qty]),
+	[CreatedBy] [int] NULL,
+	[CreatedDate] [date] NULL,
+	[UpdatedBy] [int] NULL,
+	[UpdatedDate] [date] NULL,
+ CONSTRAINT [PK_tbl_Sales] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbl_Customer]    Script Date: 4/12/2023 12:17:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbl_Customer](
+	[ID] [bigint] IDENTITY(1,1) NOT NULL,
+	[CusName] [nvarchar](50) NULL,
+	[CusTypeID] [bigint] NULL,
+	[CusContact] [nvarchar](50) NULL,
+	[CreatedDate]  AS (getdate()),
+ CONSTRAINT [PK_tbl_Customer] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  View [dbo].[Vu_Sales]    Script Date: 4/12/2023 12:17:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE VIEW [dbo].[Vu_Sales]
+AS
+SELECT customer.CusName AS 'Customer',
+       category.Category,
+       items.Items,
+       size.Size,
+       saleDetail.GrossTotal,
+       saleDetail.GST,
+       saleDetail.Total,
+       saleDetail.PayAmount,
+       (saleDetail.PayAmount - saleDetail.Total) AS ReturnAmount
+FROM   tbl_Sales AS sales
+       INNER JOIN
+       tbl_ItemCategory AS category
+       ON sales.CatID = category.ID
+       INNER JOIN
+       tbl_Items AS items
+       ON sales.ItemID = items.ID
+       INNER JOIN
+       tbl_Size AS size
+       ON sales.SizeID = size.ID
+       INNER JOIN
+       tbl_SalesDetails AS saleDetail
+       ON sales.SaleID = saleDetail.SalesID
+       LEFT OUTER JOIN
+       tbl_Customer AS customer
+       ON saleDetail.CustID = customer.ID;
+
+GO
+/****** Object:  Table [dbo].[tbl_Account]    Script Date: 4/12/2023 12:17:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbl_Account](
+	[ID] [bigint] IDENTITY(1,1) NOT NULL,
+	[TransctionID] [nvarchar](max) NULL,
+	[Description] [nvarchar](max) NULL,
+	[AccTypeID] [bigint] NULL,
+	[CusID] [bigint] NULL,
+	[Debit] [decimal](18, 5) NULL,
+	[Credit] [decimal](18, 5) NULL,
+ CONSTRAINT [PK_tbl_Account] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbl_AccountType]    Script Date: 4/12/2023 12:17:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbl_AccountType](
+	[ID] [bigint] NOT NULL,
+	[AccountType] [nvarchar](max) NULL,
+	[CreatedBy] [int] NULL,
+	[CreatedDate] [date] NULL,
+	[Updatedby] [int] NULL,
+	[UpdatedDate] [date] NULL,
+ CONSTRAINT [PK_tbl_AccountType] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbl_AlertResults]    Script Date: 4/12/2023 12:17:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbl_AlertResults](
+	[ID] [bigint] IDENTITY(1,1) NOT NULL,
+	[Alert] [nvarchar](max) NULL,
+	[Tablename] [nvarchar](max) NULL,
+	[UserID] [bigint] NULL,
+	[ResultID] [bigint] NULL,
+ CONSTRAINT [PK_tbl_AlertResults] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbl_AssignMenu]    Script Date: 4/12/2023 12:17:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbl_AssignMenu](
+	[ID] [bigint] IDENTITY(1,1) NOT NULL,
+	[MenuID] [bigint] NULL,
+	[SubMenuID] [bigint] NULL,
+	[UserID] [bigint] NULL,
+	[Createdby] [bigint] NULL,
+	[CreatedDate] [date] NULL,
+	[UpdaetedBy] [bigint] NULL,
+	[UpdatedDate] [date] NULL,
+ CONSTRAINT [PK_tbl_AssignMenu] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbl_Deal]    Script Date: 4/12/2023 12:17:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbl_Deal](
+	[ID] [bigint] IDENTITY(1,1) NOT NULL,
+	[DealType] [nvarchar](50) NULL,
+	[DealName] [nvarchar](50) NULL,
+	[DealSize] [nvarchar](50) NULL,
+	[DealPrice] [decimal](18, 5) NULL,
+	[CreatedBy] [bigint] NULL,
+	[CreatedDate] [datetime] NULL,
+	[UpdatedBy] [bigint] NULL,
+	[UpdatedDate] [datetime] NULL,
+ CONSTRAINT [PK_tbl_Deal] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbl_GST]    Script Date: 4/12/2023 12:17:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbl_GST](
+	[ID] [bigint] IDENTITY(1,1) NOT NULL,
+	[GST] [decimal](18, 1) NULL,
+	[CreatedBy] [int] NULL,
+	[CreatedDate] [date] NULL,
+	[UpdatedBy] [int] NULL,
+	[UpdatedDate] [date] NULL,
+ CONSTRAINT [PK_tbl_GST] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbl_Menu_Master]    Script Date: 4/12/2023 12:17:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbl_Menu_Master](
+	[ID] [bigint] IDENTITY(1,1) NOT NULL,
+	[MenuText] [nvarchar](50) NOT NULL,
+	[MenuLink] [nvarchar](max) NOT NULL,
+	[MenuIco] [nvarchar](max) NOT NULL,
+	[CreatedBy] [int] NULL,
+	[CreatedDate] [date] NULL,
+	[UpdatedBy] [int] NULL,
+	[UpdatedDate] [date] NULL,
+	[IsActive] [bit] NULL,
+ CONSTRAINT [PK_tbl_Menu_Master] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbl_Role]    Script Date: 4/12/2023 12:17:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbl_Role](
+	[ID] [bigint] IDENTITY(1,1) NOT NULL,
+	[Role] [nvarchar](max) NULL,
+ CONSTRAINT [PK_tbl_Role] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tbl_SubMenu]    Script Date: 4/12/2023 12:17:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tbl_SubMenu](
+	[ID] [bigint] IDENTITY(1,1) NOT NULL,
+	[MenuID] [bigint] NOT NULL,
+	[MenuText] [nvarchar](max) NULL,
+	[MenuLink] [nvarchar](max) NULL,
+	[MenuIco] [nvarchar](max) NULL,
+	[CreatedBy] [int] NULL,
+	[CreatedDate] [date] NULL,
+	[UpdatedBy] [int] NULL,
+	[UpdatedDate] [date] NULL,
+	[IsActive] [bit] NULL,
+ CONSTRAINT [PK_tbl_SubMenu] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tblProject]    Script Date: 4/12/2023 12:17:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tblProject](
+	[ID] [bigint] IDENTITY(1,1) NOT NULL,
+	[Project] [nvarchar](max) NULL,
+ CONSTRAINT [PK_tblProject] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tblSp]    Script Date: 4/12/2023 12:17:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tblSp](
+	[ID] [bigint] IDENTITY(1,1) NOT NULL,
+	[Sp_text] [nvarchar](max) NULL,
+	[PID] [bigint] NULL,
+ CONSTRAINT [PK_tblSp] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[tbl_ItemCategory] ADD  DEFAULT ((0)) FOR [IsActive]
+GO
+ALTER TABLE [dbo].[tbl_Items] ADD  DEFAULT ((0)) FOR [IsActive]
+GO
+ALTER TABLE [dbo].[tbl_Size] ADD  DEFAULT ((0)) FOR [IsActive]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_add]    Script Date: 4/12/2023 12:17:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE   PROCEDURE [dbo].[sp_add]
+@Project NVARCHAR (100), @SP NVARCHAR (100)
+AS
+BEGIN
+    DECLARE @res AS NVARCHAR (100);
+    DECLARE @PID AS BIGINT;
+    IF EXISTS (SELECT *
+               FROM   tblProject
+               WHERE  Project = (@Project))
+        BEGIN
+            SET @res = 'project he hmry pass already   ';
+        END
+    ELSE
+        BEGIN
+            INSERT  INTO tblProject (Project)
+            VALUES                 (@Project);
+            SET @res = 'project save ho gya  ';
+        END
+    SELECT @PID = ID
+    FROM   tblProject
+    WHERE  Project = @Project;
+    IF EXISTS (SELECT *
+               FROM   tblSp
+               WHERE  PID = @PID
+                      AND Sp_text = @SP
+                      OR @PID = 0)
+        BEGIN
+            SET @res = 'Project save nhi hwa ';
+        END
+    ELSE
+        BEGIN
+            INSERT  INTO tblSp (Sp_text, PID)
+            VALUES            (@SP, @PID);
+            SET @res = 'sp save ho gia  ';
+        END
+    SELECT @res;
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[SP_Category]    Script Date: 4/12/2023 12:17:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[SP_Category]
+@ID BIGINT, @Category NVARCHAR (100), @CreatedBy INT, @query INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    DECLARE @res AS NVARCHAR (100);
+    IF (@query = 1)
+        BEGIN
+            IF EXISTS (SELECT *
+                       FROM   tbl_ItemCategory
+                       WHERE  Category = @Category)
+                BEGIN
+                    SET @res = 'Already Exists !';
+                END
+            ELSE
+                BEGIN
+                    INSERT  INTO tbl_ItemCategory (Category, CreatedBy, CreatedDate, IsActive)
+                    VALUES                       (@Category, @CreatedBy, GETDATE(), 1);
+                    SET @res = 'Record has been saved !';
+                END
+        END
+    ELSE
+        IF (@query = 2)
+            BEGIN
+                UPDATE tbl_ItemCategory
+                SET    IsActive    = 1,
+                       Category    = @Category,
+                       UpdatedBy   = @CreatedBy,
+                       UpdatedDate = GETDATE()
+                WHERE  ID = @ID;
+                SET @res = 'Selected Record has been updated';
+            END
+        ELSE
+            IF (@query = 3)
+                BEGIN
+                    UPDATE tbl_ItemCategory
+                    SET    IsActive = 0
+                    WHERE  ID = @ID;
+                    SET @res = 'Selected Record has been deleted';
+                END
+    SELECT @res;
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[sp_getsplst]    Script Date: 4/12/2023 12:17:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE   PROCEDURE [dbo].[sp_getsplst]
+AS
+BEGIN
+    SELECT   s.PID,
+             s.ID,
+             s.Sp_text AS Sp
+    FROM     tblSp AS s
+             INNER JOIN
+             tblProject AS p
+             ON s.PID = p.ID
+    ORDER BY s.ID DESC;
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[SP_Items]    Script Date: 4/12/2023 12:17:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE   PROCEDURE [dbo].[SP_Items]
+@ID BIGINT, @CatID INT, @Items NVARCHAR (100), @CreatedBy INT, @query INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    DECLARE @res AS NVARCHAR (100);
+    IF (@query = 1)
+        BEGIN
+            IF EXISTS (SELECT *
+                       FROM   tbl_Items
+                       WHERE  CatID = @CatID
+                              AND Items = @Items)
+                BEGIN
+                    SET @res = 'Already Exists !';
+                END
+            ELSE
+                BEGIN
+                    INSERT  INTO tbl_Items (CatID, Items, CreatedBy, CreatedDate, IsActive)
+                    VALUES                (@CatID, @Items, @CreatedBy, GETDATE(), 1);
+                    SET @res = 'Record has been saved !';
+                END
+        END
+    ELSE
+        IF (@query = 2)
+            BEGIN
+                UPDATE tbl_Items
+                SET    CatID       = @CatID,
+                       Items       = @Items,
+                       UpdatedBy   = @CreatedBy,
+                       UpdatedDate = GETDATE(),
+                       IsActive    = 1
+                WHERE  ID = @ID;
+                SET @res = 'Selected Record has been Updated';
+            END
+        ELSE
+            IF (@query = 3)
+                BEGIN
+                    IF EXISTS (SELECT *
+                               FROM   tbl_ItemCategory
+                               WHERE  IsActive = 0)
+                        BEGIN
+                            UPDATE tbl_ItemCategory
+                            SET    IsActive = 1
+                            WHERE  ID = @ID;
+                            SET @res = 'Selected Record has been Active';
+                        END
+                    ELSE
+                        BEGIN
+                            UPDATE tbl_ItemCategory
+                            SET    IsActive = 0
+                            WHERE  ID = @ID;
+                            SET @res = 'Selected Record has been Un-Active';
+                        END
+                END
+    SELECT @res;
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[Sp_Login]    Script Date: 4/12/2023 12:17:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE   PROCEDURE [dbo].[Sp_Login]
+@name NVARCHAR (100), @email NVARCHAR (100), @password NVARCHAR (100)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    DECLARE @Result AS INT;
+    IF EXISTS (SELECT *
+               FROM   tbl_User
+               WHERE  (UEmail = @email
+                       OR Username = @name)
+                      AND UPassword = @password)
+        BEGIN
+            SET @Result = 1;
+        END
+    ELSE
+        BEGIN
+            SET @Result = 0;
+        END
+    SELECT @Result;
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[SP_Menu]    Script Date: 4/12/2023 12:17:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE   PROCEDURE [dbo].[SP_Menu]
+@ID BIGINT=0, @MID BIGINT=0, @MenuText NVARCHAR (100)='', @MenuLink NVARCHAR (100)='', @MenuIco NVARCHAR (100)='', @CreatedBy BIGINT='', @query INT=0
+AS
+BEGIN
+    SET NOCOUNT ON;
+    DECLARE @res AS NVARCHAR (100);
+    IF (@query = 1)
+        BEGIN
+            IF EXISTS (SELECT *
+                       FROM   tbl_Menu_Master
+                       WHERE  MenuLink = @MenuLink)
+                BEGIN
+                    SET @res = 'Already Exists !';
+                END
+            ELSE
+                BEGIN
+                    INSERT  INTO tbl_Menu_Master (IsActive, MenuText, MenuLink, MenuIco, CreatedBy, CreatedDate)
+                    VALUES                      (1, @MenuText, @MenuLink, @MenuIco, @CreatedBy, GETDATE());
+                END
+        END
+    ELSE
+        IF (@query = 2)
+            BEGIN
+                UPDATE tbl_Menu_Master
+                SET    MenuText    = @MenuText,
+                       MenuLink    = @MenuLink,
+                       MenuIco     = @MenuIco,
+                       UpdatedBy   = @CreatedBy,
+                       IsActive    = 1,
+                       UpdatedDate = GETDATE()
+                WHERE  ID = @ID;
+                SET @res = 'Selected Record has been Updated';
+            END
+        ELSE
+            IF (@query = 3)
+                BEGIN
+                    IF EXISTS (SELECT *
+                               FROM   tbl_Menu_Master
+                               WHERE  IsActive = 0)
+                        BEGIN
+                            UPDATE tbl_Menu_Master
+                            SET    IsActive = 1
+                            WHERE  ID = @ID;
+                            SET @res = 'Selected Record has been Active';
+                        END
+                    ELSE
+                        BEGIN
+                            UPDATE tbl_Menu_Master
+                            SET    IsActive = 0
+                            WHERE  ID = @ID;
+                            SET @res = 'Selected Record has been Un Active';
+                        END
+                END
+    IF (@query = 4)
+        BEGIN
+            IF EXISTS (SELECT *
+                       FROM   tbl_SubMenu
+                       WHERE  MenuLink = @MenuLink
+                              AND MenuID = @MID)
+                BEGIN
+                    SET @res = 'Already Exists !';
+                END
+            ELSE
+                BEGIN
+                    INSERT  INTO tbl_SubMenu (IsActive, MenuID, MenuText, MenuLink, MenuIco, CreatedBy, CreatedDate)
+                    VALUES                  (1, @MID, @MenuText, @MenuLink, @MenuIco, @CreatedBy, GETDATE());
+                    SET @res = 'New Sub Menu has been inserted';
+                END
+        END
+    ELSE
+        IF (@query = 2)
+            BEGIN
+                UPDATE tbl_SubMenu
+                SET    IsActive    = 1,
+                       MenuID      = @MID,
+                       MenuText    = @MenuText,
+                       MenuLink    = @MenuLink,
+                       MenuIco     = @MenuIco,
+                       UpdatedBy   = @CreatedBy,
+                       UpdatedDate = GETDATE()
+                WHERE  ID = @ID;
+                SET @res = 'Selected Record has been Updated';
+            END
+        ELSE
+            IF (@query = 3)
+                BEGIN
+                    IF EXISTS (SELECT *
+                               FROM   tbl_SubMenu
+                               WHERE  IsActive = 0)
+                        BEGIN
+                            UPDATE tbl_SubMenu
+                            SET    IsActive = 1
+                            WHERE  ID = @ID;
+                            SET @res = 'Selected Record has been Active';
+                        END
+                    ELSE
+                        BEGIN
+                            UPDATE tbl_SubMenu
+                            SET    IsActive = 0
+                            WHERE  ID = @ID;
+                            SET @res = 'Selected Record has been Un Active';
+                        END
+                END
+    SELECT @res;
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[Sp_Sales]    Script Date: 4/12/2023 12:17:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[Sp_Sales]
+@ID DECIMAL (18, 0), @Sales DECIMAL (18, 0), @CusID DECIMAL (18, 0), @CreatedBy DECIMAL (18, 0), @Payamount DECIMAL (18, 5), @Returnamount DECIMAL (18, 0), @SelectedItems SelectedItems READONLY, @query INT
+AS
+BEGIN
+    DECLARE @SaleID AS BIGINT;
+    DECLARE @GST AS DECIMAL (18, 1);
+    DECLARE @GrossTotal AS DECIMAL (18, 5);
+    DECLARE @Total AS DECIMAL (18, 5);
+    SELECT @GST = isnull(GST, 0)
+    FROM   tbl_GST
+    WHERE  CreatedBy = @CreatedBy;
+    IF (@query = 1)
+        BEGIN
+            INSERT INTO tbl_Sales (SaleID, CatID, ItemID, SizeID, Price, Qty, CreatedBy, CreatedDate)
+            SELECT @Sales,
+                   CatID,
+                   ItemID,
+                   SizeID,
+                   Price,
+                   Qty,
+                   @CreatedBy,
+                   GETDATE()
+            FROM   @SelectedItems;
+            SET @SaleID = SCOPE_IDENTITY();
+            SELECT @GrossTotal = isnull(Total, 0)
+            FROM   tbl_Sales
+            WHERE  SaleID = @SaleID;
+            SET @Total = (@GrossTotal / 100 * @GST);
+            INSERT  INTO tbl_SalesDetails (SalesID, CustID, GrossTotal, GST, Total, PayAmount, ReturnAmount, CreatedBy, CreatedDate)
+            VALUES                       (@SaleID, @CusID, @GrossTotal, @GST, @Total, @Payamount, @Returnamount, @CreatedBy, GETDATE());
+        END
+    IF (@query = 2)
+        BEGIN
+            DELETE tbl_Sales
+            WHERE  SaleID = @Sales;
+            DELETE tbl_SalesDetails
+            WHERE  SalesID = @Sales;
+        END
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[SP_Size]    Script Date: 4/12/2023 12:17:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[SP_Size]
+@ID BIGINT, @CatID BIGINT, @ItemID BIGINT, @Size NVARCHAR (100), @Price DECIMAL (18, 5), @Stock BIGINT, @RetailPrice DECIMAL (18, 5), @CreatedBy INT, @query INT
+AS
+BEGIN
+    DECLARE @res AS NVARCHAR (100);
+    IF (@query = 1)
+        BEGIN
+            IF EXISTS (SELECT *
+                       FROM   tbl_Size
+                       WHERE  CatID = @CatID
+                              AND ItemID = @ItemID
+                              AND Size = @Size)
+                BEGIN
+                    SET @res = 'Already Exists !';
+                END
+            ELSE
+                BEGIN
+                    INSERT  INTO tbl_Size (CatID, ItemID, Size, Price, Qty, RetailPrice, CreatedBy, CreatedDate, IsActive)
+                    VALUES               (@CatID, @ItemID, @Size, @Price, @Stock, @RetailPrice, @CreatedBy, GETDATE(), 1);
+                    SET @res = 'Record has been Saved';
+                END
+        END
+    ELSE
+        IF (@query = 2)
+            BEGIN
+                UPDATE tbl_Size
+                SET    CatID       = @CatID,
+                       ItemID      = @ItemID,
+                       Size        = @Size,
+                       Price       = @Price,
+                       Qty         = @Stock,
+                       RetailPrice = @RetailPrice,
+                       UpdatedBy   = @CreatedBy,
+                       CreatedDate = getdate(),
+                       IsActive    = 1
+                WHERE  ID = @ID;
+                SET @res = 'Selected Record has been updated';
+            END
+        ELSE
+            IF (@query = 3)
+                BEGIN
+                    IF EXISTS (SELECT *
+                               FROM   tbl_Size
+                               WHERE  IsActive = 0)
+                        BEGIN
+                            UPDATE tbl_Size
+                            SET    IsActive = 1
+                            WHERE  ID = @ID;
+                            SET @res = 'Selected Record has been Active';
+                        END
+                    ELSE
+                        BEGIN
+                            UPDATE tbl_Size
+                            SET    IsActive = 0
+                            WHERE  ID = @ID;
+                            SET @res = 'Selected Record has been Un Active';
+                        END
+                END
+    SELECT @res;
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[sp_user]    Script Date: 4/12/2023 12:17:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_user]
+@Id INT, @name NVARCHAR (MAX)
+AS
+BEGIN
+    PRINT (@name);
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[Sp_UserRegistration]    Script Date: 4/12/2023 12:17:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE   PROCEDURE [dbo].[Sp_UserRegistration]
+@ID INT, @RoleID INT, @name NVARCHAR (100), @password NVARCHAR (100), @email NVARCHAR (100), @cell NVARCHAR (100), @pic NVARCHAR (100), @query INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    DECLARE @Result AS NVARCHAR (1000);
+    IF (@query = 1)
+        BEGIN
+            IF EXISTS (SELECT *
+                       FROM   tbl_User
+                       WHERE  UEmail = @email
+                              OR UCell = @cell)
+                BEGIN
+                    SET @Result = 'This Email / Cell number is existing ';
+                END
+            ELSE
+                BEGIN
+                    INSERT  INTO tbl_User (RoleID, Username, UPassword, UEmail, UCell, UPic, CreatedDate, IsActive)
+                    VALUES               (@RoleID, @name, @password, @email, @cell, @pic, GETDATE(), 1);
+                    SET @Result = 'New Record has been Inserted ';
+                END
+        END
+    IF (@query = 2)
+        BEGIN
+            UPDATE tbl_User
+            SET    Username     = @name,
+                   UPassword    = @password,
+                   IsActive     = 1,
+                   UEmail       = @email,
+                   UCell        = @cell,
+                   UPic         = @pic,
+                   ModifiedDate = GETDATE()
+            WHERE  ID = @ID;
+            SET @Result = 'Selected Record has been Updated ';
+        END
+    IF (@query = 3)
+        BEGIN
+            UPDATE tbl_User
+            SET    IsActive = 0
+            WHERE  ID = @ID;
+            SET @Result = 'This User has been Un Active  ';
+        END
+    SELECT @Result;
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[SPUserRegistration]    Script Date: 4/12/2023 12:17:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[SPUserRegistration]
+@ID INT, @RoleID INT, @name NVARCHAR (100), @password NVARCHAR (100), @email NVARCHAR (100), @cell NVARCHAR (100), @pic NVARCHAR (100), @query INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    DECLARE @Result AS NVARCHAR (1000);
+    IF (@query = 1)
+        BEGIN
+            IF EXISTS (SELECT *
+                       FROM   tbl_User
+                       WHERE  UEmail = @email
+                              OR UCell = @cell)
+                BEGIN
+                    SET @Result = 'This Email / Cell number is existing ';
+                END
+            ELSE
+                BEGIN
+                    INSERT  INTO tbl_User (RoleID, Username, UPassword, UEmail, UCell, UPic, CreatedDate, IsActive)
+                    VALUES               (@RoleID, @name, @password, @email, @cell, @pic, GETDATE(), 1);
+                    SET @Result = 'New Record has been Inserted ';
+                END
+        END
+    IF (@query = 2)
+        BEGIN
+            UPDATE tbl_User
+            SET    Username     = @name,
+                   UPassword    = @password,
+                   IsActive     = 1,
+                   UEmail       = @email,
+                   UCell        = @cell,
+                   UPic         = @pic,
+                   ModifiedDate = GETDATE()
+            WHERE  ID = @ID;
+            SET @Result = 'Selected Record has been Updated ';
+        END
+    IF (@query = 3)
+        BEGIN
+            UPDATE tbl_User
+            SET    IsActive = 0
+            WHERE  ID = @ID;
+            SET @Result = 'This User has been Un Active  ';
+        END
+    SELECT @Result;
+END
+
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane1', @value=N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
+Begin DesignProperties = 
+   Begin PaneConfigurations = 
+      Begin PaneConfiguration = 0
+         NumPanes = 4
+         Configuration = "(H (1[40] 4[20] 2[20] 3) )"
+      End
+      Begin PaneConfiguration = 1
+         NumPanes = 3
+         Configuration = "(H (1 [50] 4 [25] 3))"
+      End
+      Begin PaneConfiguration = 2
+         NumPanes = 3
+         Configuration = "(H (1 [50] 2 [25] 3))"
+      End
+      Begin PaneConfiguration = 3
+         NumPanes = 3
+         Configuration = "(H (4 [30] 2 [40] 3))"
+      End
+      Begin PaneConfiguration = 4
+         NumPanes = 2
+         Configuration = "(H (1 [56] 3))"
+      End
+      Begin PaneConfiguration = 5
+         NumPanes = 2
+         Configuration = "(H (2 [66] 3))"
+      End
+      Begin PaneConfiguration = 6
+         NumPanes = 2
+         Configuration = "(H (4 [50] 3))"
+      End
+      Begin PaneConfiguration = 7
+         NumPanes = 1
+         Configuration = "(V (3))"
+      End
+      Begin PaneConfiguration = 8
+         NumPanes = 3
+         Configuration = "(H (1[56] 4[18] 2) )"
+      End
+      Begin PaneConfiguration = 9
+         NumPanes = 2
+         Configuration = "(H (1 [75] 4))"
+      End
+      Begin PaneConfiguration = 10
+         NumPanes = 2
+         Configuration = "(H (1[66] 2) )"
+      End
+      Begin PaneConfiguration = 11
+         NumPanes = 2
+         Configuration = "(H (4 [60] 2))"
+      End
+      Begin PaneConfiguration = 12
+         NumPanes = 1
+         Configuration = "(H (1) )"
+      End
+      Begin PaneConfiguration = 13
+         NumPanes = 1
+         Configuration = "(V (4))"
+      End
+      Begin PaneConfiguration = 14
+         NumPanes = 1
+         Configuration = "(V (2))"
+      End
+      ActivePaneConfig = 0
+   End
+   Begin DiagramPane = 
+      Begin Origin = 
+         Top = 0
+         Left = 0
+      End
+      Begin Tables = 
+         Begin Table = "tbl_ItemCategory"
+            Begin Extent = 
+               Top = 9
+               Left = 57
+               Bottom = 206
+               Right = 279
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+      End
+   End
+   Begin SQLPane = 
+   End
+   Begin DataPane = 
+      Begin ParameterDefaults = ""
+      End
+   End
+   Begin CriteriaPane = 
+      Begin ColumnWidths = 11
+         Column = 1440
+         Alias = 900
+         Table = 1170
+         Output = 720
+         Append = 1400
+         NewValue = 1170
+         SortType = 1350
+         SortOrder = 1410
+         GroupBy = 1350
+         Filter = 1350
+         Or = 1350
+         Or = 1350
+         Or = 1350
+      End
+   End
+End
+' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'Vu_Category'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'Vu_Category'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane1', @value=N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
+Begin DesignProperties = 
+   Begin PaneConfigurations = 
+      Begin PaneConfiguration = 0
+         NumPanes = 4
+         Configuration = "(H (1[40] 4[20] 2[20] 3) )"
+      End
+      Begin PaneConfiguration = 1
+         NumPanes = 3
+         Configuration = "(H (1 [50] 4 [25] 3))"
+      End
+      Begin PaneConfiguration = 2
+         NumPanes = 3
+         Configuration = "(H (1 [50] 2 [25] 3))"
+      End
+      Begin PaneConfiguration = 3
+         NumPanes = 3
+         Configuration = "(H (4 [30] 2 [40] 3))"
+      End
+      Begin PaneConfiguration = 4
+         NumPanes = 2
+         Configuration = "(H (1 [56] 3))"
+      End
+      Begin PaneConfiguration = 5
+         NumPanes = 2
+         Configuration = "(H (2 [66] 3))"
+      End
+      Begin PaneConfiguration = 6
+         NumPanes = 2
+         Configuration = "(H (4 [50] 3))"
+      End
+      Begin PaneConfiguration = 7
+         NumPanes = 1
+         Configuration = "(V (3))"
+      End
+      Begin PaneConfiguration = 8
+         NumPanes = 3
+         Configuration = "(H (1[56] 4[18] 2) )"
+      End
+      Begin PaneConfiguration = 9
+         NumPanes = 2
+         Configuration = "(H (1 [75] 4))"
+      End
+      Begin PaneConfiguration = 10
+         NumPanes = 2
+         Configuration = "(H (1[66] 2) )"
+      End
+      Begin PaneConfiguration = 11
+         NumPanes = 2
+         Configuration = "(H (4 [60] 2))"
+      End
+      Begin PaneConfiguration = 12
+         NumPanes = 1
+         Configuration = "(H (1) )"
+      End
+      Begin PaneConfiguration = 13
+         NumPanes = 1
+         Configuration = "(V (4))"
+      End
+      Begin PaneConfiguration = 14
+         NumPanes = 1
+         Configuration = "(V (2))"
+      End
+      ActivePaneConfig = 0
+   End
+   Begin DiagramPane = 
+      Begin Origin = 
+         Top = 0
+         Left = 0
+      End
+      Begin Tables = 
+         Begin Table = "tbl_ItemCategory"
+            Begin Extent = 
+               Top = 9
+               Left = 57
+               Bottom = 206
+               Right = 279
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "tbl_Items"
+            Begin Extent = 
+               Top = 9
+               Left = 336
+               Bottom = 206
+               Right = 558
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+      End
+   End
+   Begin SQLPane = 
+   End
+   Begin DataPane = 
+      Begin ParameterDefaults = ""
+      End
+   End
+   Begin CriteriaPane = 
+      Begin ColumnWidths = 11
+         Column = 1440
+         Alias = 900
+         Table = 1170
+         Output = 720
+         Append = 1400
+         NewValue = 1170
+         SortType = 1350
+         SortOrder = 1410
+         GroupBy = 1350
+         Filter = 1350
+         Or = 1350
+         Or = 1350
+         Or = 1350
+      End
+   End
+End
+' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'Vu_Items'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'Vu_Items'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane1', @value=N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
+Begin DesignProperties = 
+   Begin PaneConfigurations = 
+      Begin PaneConfiguration = 0
+         NumPanes = 4
+         Configuration = "(H (1[40] 4[20] 2[20] 3) )"
+      End
+      Begin PaneConfiguration = 1
+         NumPanes = 3
+         Configuration = "(H (1 [50] 4 [25] 3))"
+      End
+      Begin PaneConfiguration = 2
+         NumPanes = 3
+         Configuration = "(H (1 [50] 2 [25] 3))"
+      End
+      Begin PaneConfiguration = 3
+         NumPanes = 3
+         Configuration = "(H (4 [30] 2 [40] 3))"
+      End
+      Begin PaneConfiguration = 4
+         NumPanes = 2
+         Configuration = "(H (1 [56] 3))"
+      End
+      Begin PaneConfiguration = 5
+         NumPanes = 2
+         Configuration = "(H (2 [66] 3))"
+      End
+      Begin PaneConfiguration = 6
+         NumPanes = 2
+         Configuration = "(H (4 [50] 3))"
+      End
+      Begin PaneConfiguration = 7
+         NumPanes = 1
+         Configuration = "(V (3))"
+      End
+      Begin PaneConfiguration = 8
+         NumPanes = 3
+         Configuration = "(H (1[56] 4[18] 2) )"
+      End
+      Begin PaneConfiguration = 9
+         NumPanes = 2
+         Configuration = "(H (1 [75] 4))"
+      End
+      Begin PaneConfiguration = 10
+         NumPanes = 2
+         Configuration = "(H (1[66] 2) )"
+      End
+      Begin PaneConfiguration = 11
+         NumPanes = 2
+         Configuration = "(H (4 [60] 2))"
+      End
+      Begin PaneConfiguration = 12
+         NumPanes = 1
+         Configuration = "(H (1) )"
+      End
+      Begin PaneConfiguration = 13
+         NumPanes = 1
+         Configuration = "(V (4))"
+      End
+      Begin PaneConfiguration = 14
+         NumPanes = 1
+         Configuration = "(V (2))"
+      End
+      ActivePaneConfig = 0
+   End
+   Begin DiagramPane = 
+      Begin Origin = 
+         Top = 0
+         Left = 0
+      End
+      Begin Tables = 
+         Begin Table = "tbl_Sales"
+            Begin Extent = 
+               Top = 9
+               Left = 57
+               Bottom = 206
+               Right = 279
+            End
+            DisplayFlags = 280
+            TopColumn = 1
+         End
+      End
+   End
+   Begin SQLPane = 
+   End
+   Begin DataPane = 
+      Begin ParameterDefaults = ""
+      End
+   End
+   Begin CriteriaPane = 
+      Begin ColumnWidths = 11
+         Column = 1440
+         Alias = 900
+         Table = 1170
+         Output = 720
+         Append = 1400
+         NewValue = 1170
+         SortType = 1350
+         SortOrder = 1410
+         GroupBy = 1350
+         Filter = 1350
+         Or = 1350
+         Or = 1350
+         Or = 1350
+      End
+   End
+End
+' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'Vu_Sales'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane2', @value=N' 1440
+         Alias = 900
+         Table = 1170
+         Output = 720
+         Append = 1400
+         NewValue = 1170
+         SortType = 1350
+         SortOrder = 1410
+         GroupBy = 1350
+         Filter = 1350
+         Or = 1350
+         Or = 1350
+         Or = 1350
+      End
+   End
+End
+' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'Vu_Sales'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'Vu_Sales'
+GO
+USE [master]
+GO
+ALTER DATABASE [dbPOS] SET  READ_WRITE 
+GO
