@@ -1,0 +1,649 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{EB634C17-6E6B-43E3-9A01-5C2BCAF87AFD}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PointOfSale</RootNamespace>
+    <AssemblyName>PointOfSale</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net40\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="KeepAutomation.Barcode.Windows">
+      <HintPath>..\..\..\..\..\..\dll\KA.Barcode.for.WindowsForms\KA.Barcode.for.WindowsForms\DLL\Net40\KeepAutomation.Barcode.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="MetroFramework">
+      <HintPath>bin\Debug\Metroframework\MetroFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="MetroFramework.Design">
+      <HintPath>bin\Debug\Metroframework\MetroFramework.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Telerik\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Telerik.WinControls, Version=2010.3.10.1109, Culture=neutral, PublicKeyToken=5bb2a467cbec794e">
+      <HintPath>bin\Debug\Telerik\Telerik.WinControls.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.WinControls.Docking">
+      <HintPath>bin\Debug\Telerik\Telerik.WinControls.Docking.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.WinControls.GridView, Version=2010.3.10.1109, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL">
+      <HintPath>bin\Debug\Telerik\Telerik.WinControls.GridView.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.WinControls.RadDock">
+      <HintPath>bin\Debug\Telerik\Telerik.WinControls.RadDock.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.WinControls.Scheduler">
+      <HintPath>bin\Debug\Telerik\Telerik.WinControls.Scheduler.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.WinControls.Themes.Aqua">
+      <HintPath>bin\Debug\Telerik\Telerik.WinControls.Themes.Aqua.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.WinControls.Themes.Breeze">
+      <HintPath>bin\Debug\Telerik\Telerik.WinControls.Themes.Breeze.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.WinControls.Themes.Desert">
+      <HintPath>bin\Debug\Telerik\Telerik.WinControls.Themes.Desert.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.WinControls.Themes.Office2007Black">
+      <HintPath>bin\Debug\Telerik\Telerik.WinControls.Themes.Office2007Black.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.WinControls.Themes.Office2007Silver">
+      <HintPath>bin\Debug\Telerik\Telerik.WinControls.Themes.Office2007Silver.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.WinControls.Themes.Office2010">
+      <HintPath>bin\Debug\Telerik\Telerik.WinControls.Themes.Office2010.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.WinControls.Themes.Telerik">
+      <HintPath>bin\Debug\Telerik\Telerik.WinControls.Themes.Telerik.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.WinControls.Themes.Vista">
+      <HintPath>bin\Debug\Telerik\Telerik.WinControls.Themes.Vista.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.WinControls.Themes.Windows7">
+      <HintPath>bin\Debug\Telerik\Telerik.WinControls.Themes.Windows7.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.WinControls.UI, Version=2010.3.10.1109, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL">
+      <HintPath>bin\Debug\Telerik\Telerik.WinControls.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.WinControls.UI.Design">
+      <HintPath>bin\Debug\Telerik\Telerik.WinControls.UI.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="TelerikCommon, Version=2010.3.10.1109, Culture=neutral, PublicKeyToken=5bb2a467cbec794e">
+      <HintPath>bin\Debug\Telerik\TelerikCommon.dll</HintPath>
+    </Reference>
+    <Reference Include="TelerikData">
+      <HintPath>bin\Debug\Telerik\TelerikData.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DBModel\dbPOS.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dbPOS.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBModel\dbPOS.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dbPOS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBModel\dbPOS.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dbPOS.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DBModel\sp_getsplst_Result.cs">
+      <DependentUpon>dbPOS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBModel\tblProject.cs">
+      <DependentUpon>dbPOS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBModel\tblSp.cs">
+      <DependentUpon>dbPOS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBModel\tbl_Account.cs">
+      <DependentUpon>dbPOS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBModel\tbl_AccountType.cs">
+      <DependentUpon>dbPOS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBModel\tbl_AlertResults.cs">
+      <DependentUpon>dbPOS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBModel\tbl_AssignMenu.cs">
+      <DependentUpon>dbPOS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBModel\tbl_Customer.cs">
+      <DependentUpon>dbPOS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBModel\tbl_Deal.cs">
+      <DependentUpon>dbPOS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBModel\tbl_GST.cs">
+      <DependentUpon>dbPOS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBModel\tbl_ItemCategory.cs">
+      <DependentUpon>dbPOS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBModel\tbl_Items.cs">
+      <DependentUpon>dbPOS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBModel\tbl_Menu_Master.cs">
+      <DependentUpon>dbPOS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBModel\tbl_Role.cs">
+      <DependentUpon>dbPOS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBModel\tbl_Sales.cs">
+      <DependentUpon>dbPOS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBModel\tbl_SalesDetails.cs">
+      <DependentUpon>dbPOS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBModel\tbl_Size.cs">
+      <DependentUpon>dbPOS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBModel\tbl_SubMenu.cs">
+      <DependentUpon>dbPOS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBModel\tbl_User.cs">
+      <DependentUpon>dbPOS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBModel\Vu_Category.cs">
+      <DependentUpon>dbPOS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBModel\Vu_Items.cs">
+      <DependentUpon>dbPOS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBModel\Vu_Sales.cs">
+      <DependentUpon>dbPOS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="demo_tree.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="demo_tree.Designer.cs">
+      <DependentUpon>demo_tree.cs</DependentUpon>
+    </Compile>
+    <Compile Include="dsn.cs" />
+    <Compile Include="For1.cs" />
+    <Compile Include="Dashboard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dashboard.Designer.cs">
+      <DependentUpon>Dashboard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="method.cs" />
+    <Compile Include="Models\BAL\ModelCategory.cs" />
+    <Compile Include="Models\BLL\cls_category.cs" />
+    <Compile Include="Models\BLL\cls_product.cs" />
+    <Compile Include="Models\SideDesign\EditCategory.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Models\SideDesign\EditCategory.Designer.cs">
+      <DependentUpon>EditCategory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SideDesign\frmProduct.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Models\SideDesign\frmProduct.Designer.cs">
+      <DependentUpon>frmProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Page\Category.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Page\Category.Designer.cs">
+      <DependentUpon>Category.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Page\Classess_\ClsMessage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Page\Classess_\gernal.cs" />
+    <Compile Include="Page\Classess_\item.cs" />
+    <Compile Include="Page\Classess_\price.cs" />
+    <Compile Include="Page\Classess_\sale.cs" />
+    <Compile Include="Page\Da.cs">
+      <DependentUpon>Da.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Page\Da.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Da.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Page\demo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Page\demo.Designer.cs">
+      <DependentUpon>demo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Page\Fo1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Page\Fo1.Designer.cs">
+      <DependentUpon>Fo1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Page\Items.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Page\Items.Designer.cs">
+      <DependentUpon>Items.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Page\Price.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Page\Price.Designer.cs">
+      <DependentUpon>Price.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Page\Progressbar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Page\Progressbar.Designer.cs">
+      <DependentUpon>Progressbar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Page\Report.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Page\Report.Designer.cs">
+      <DependentUpon>Report.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Page\Sale.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Page\Sale.Designer.cs">
+      <DependentUpon>Sale.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Page\Sale_Accounts.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Page\Sale_Accounts.Designer.cs">
+      <DependentUpon>Sale_Accounts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Page\Setting.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Page\Setting.Designer.cs">
+      <DependentUpon>Setting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Page\_setting\cls_employee_salaries.cs" />
+    <Compile Include="Page\_setting\cls_item_account.cs" />
+    <Compile Include="Page\_setting\employee_cls.cs" />
+    <Compile Include="Page\_setting\frmAccounts.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Page\_setting\frmAccounts.Designer.cs">
+      <DependentUpon>frmAccounts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Page\_setting\frmEmployee.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Page\_setting\frmEmployee.Designer.cs">
+      <DependentUpon>frmEmployee.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="demo_tree.resx">
+      <DependentUpon>demo_tree.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dashboard.resx">
+      <DependentUpon>Dashboard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\SideDesign\EditCategory.resx">
+      <DependentUpon>EditCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\SideDesign\frmProduct.resx">
+      <DependentUpon>frmProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Page\Category.resx">
+      <DependentUpon>Category.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Page\Classess_\ClsMessage.resx">
+      <DependentUpon>ClsMessage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Page\demo.resx">
+      <DependentUpon>demo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Page\Fo1.resx">
+      <DependentUpon>Fo1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Page\Items.resx">
+      <DependentUpon>Items.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Page\Price.resx">
+      <DependentUpon>Price.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Page\Progressbar.resx">
+      <DependentUpon>Progressbar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Page\Report.resx">
+      <DependentUpon>Report.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Page\Sale.resx">
+      <DependentUpon>Sale.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Page\Sale_Accounts.resx">
+      <DependentUpon>Sale_Accounts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Page\Setting.resx">
+      <DependentUpon>Setting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Page\_setting\frmAccounts.resx">
+      <DependentUpon>frmAccounts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Page\_setting\frmEmployee.resx">
+      <DependentUpon>frmEmployee.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="App.Config" />
+    <EntityDeploy Include="DBModel\dbPOS.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>dbPOS.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="DBModel\dbPOS.edmx.diagram">
+      <DependentUpon>dbPOS.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Page\Da.xsc">
+      <DependentUpon>Da.xsd</DependentUpon>
+    </None>
+    <None Include="Page\Da.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>Da.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Page\Da.xss">
+      <DependentUpon>Da.xsd</DependentUpon>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\51x49.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\51x51.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\64x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\accounts.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\accounts_.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\add new.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\add product.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\add_company.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\add_prodct.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\add_sitem.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\addcategory.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\bank.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\bitcoin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\check.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\city.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\company.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\country_.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\country_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\course by class 64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\course.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\course64x64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\cross.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\Customer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\Customer1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\Employee.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\employeee.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\expense.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\file1201.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\forword.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\invoice.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\invoice1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\Key-White.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\laptop_PNG5897.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\Login.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\Login1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\logout.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\logout11.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\Master.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\minimize-maximize-buttons-icons_247762.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\monitor-transparent-lcd-png-image-5a3a0dd0f00784.15686870151375406498321044.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\output-onlinepngtools %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\output-onlinepngtools %283%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\output-onlinepngtools.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\paper_purchase.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\Party.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\pngtree-sale-icon-png-image_449310.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\projection-screens-multimedia-projectors-computer-monitors-laptop-projector-screen-png-900_900.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\Refersh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\Return sale.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\Return sale1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\return.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\sad.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\salaries.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\sales-label-sticker-icon-png-favpng-hAv58GX5JgJzc5uM6d2HY2R3Q.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\search.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\Shop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\simile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\sindh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\state.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\techinal_issue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\theme.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\tick.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\truck.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\user.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\user_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\Webp.net-resizeimage %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\Webp.net-resizeimage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Icon\32x32\xclose-icon-white.png.pagespeed.ic.SgOrfy65Eg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DBModel\dbPOS.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>dbPOS.edmx</DependentUpon>
+      <LastGenOutput>dbPOS.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DBModel\dbPOS.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>dbPOS.edmx</DependentUpon>
+      <LastGenOutput>dbPOS.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,1109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="dbPOSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tbl_Account">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TransctionID" Type="nvarchar(max)" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="AccTypeID" Type="bigint" />
+          <Property Name="CusID" Type="bigint" />
+          <Property Name="Debit" Type="decimal" Precision="18" Scale="5" />
+          <Property Name="Credit" Type="decimal" Precision="18" Scale="5" />
+        </EntityType>
+        <EntityType Name="tbl_AccountType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" Nullable="false" />
+          <Property Name="AccountType" Type="nvarchar(max)" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="date" />
+          <Property Name="Updatedby" Type="int" />
+          <Property Name="UpdatedDate" Type="date" />
+        </EntityType>
+        <EntityType Name="tbl_AlertResults">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Alert" Type="nvarchar(max)" />
+          <Property Name="Tablename" Type="nvarchar(max)" />
+          <Property Name="UserID" Type="bigint" />
+          <Property Name="ResultID" Type="bigint" />
+        </EntityType>
+        <EntityType Name="tbl_AssignMenu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MenuID" Type="bigint" />
+          <Property Name="SubMenuID" Type="bigint" />
+          <Property Name="UserID" Type="bigint" />
+          <Property Name="Createdby" Type="bigint" />
+          <Property Name="CreatedDate" Type="date" />
+          <Property Name="UpdaetedBy" Type="bigint" />
+          <Property Name="UpdatedDate" Type="date" />
+        </EntityType>
+        <EntityType Name="tbl_Customer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CusName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CusTypeID" Type="bigint" />
+          <Property Name="CusContact" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" StoreGeneratedPattern="Computed" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_Deal">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DealType" Type="nvarchar" MaxLength="50" />
+          <Property Name="DealName" Type="nvarchar" MaxLength="50" />
+          <Property Name="DealSize" Type="nvarchar" MaxLength="50" />
+          <Property Name="DealPrice" Type="decimal" Precision="18" Scale="5" />
+          <Property Name="CreatedBy" Type="bigint" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="UpdatedBy" Type="bigint" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_GST">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GST" Type="decimal" Precision="18" Scale="1" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="date" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="date" />
+        </EntityType>
+        <EntityType Name="tbl_ItemCategory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Category" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="date" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="date" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="tbl_Items">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Items" Type="nvarchar" MaxLength="50" />
+          <Property Name="CatID" Type="bigint" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="date" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="date" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="tbl_Menu_Master">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MenuText" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MenuLink" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="MenuIco" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="date" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="date" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="tbl_Role">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Role" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="tbl_Sales">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SaleID" Type="bigint" Nullable="false" />
+          <Property Name="CatID" Type="bigint" Nullable="false" />
+          <Property Name="ItemID" Type="bigint" Nullable="false" />
+          <Property Name="SizeID" Type="bigint" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Qty" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Total" Type="decimal" Precision="37" Scale="4" StoreGeneratedPattern="Computed" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="date" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="date" />
+        </EntityType>
+        <EntityType Name="tbl_SalesDetails">
+          <Key>
+            <PropertyRef Name="SalesID" />
+          </Key>
+          <Property Name="SalesID" Type="bigint" Nullable="false" />
+          <Property Name="CustID" Type="bigint" />
+          <Property Name="GrossTotal" Type="decimal" Precision="18" Scale="5" />
+          <Property Name="GST" Type="decimal" Precision="18" Scale="5" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="5" />
+          <Property Name="PayAmount" Type="decimal" Precision="18" Scale="5" />
+          <Property Name="ReturnAmount" Type="decimal" Precision="18" Scale="5" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="date" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="date" />
+        </EntityType>
+        <EntityType Name="tbl_Size">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CatID" Type="bigint" Nullable="false" />
+          <Property Name="ItemID" Type="bigint" Nullable="false" />
+          <Property Name="Size" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="5" Nullable="false" />
+          <Property Name="Qty" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="PurchaseTotal" Type="decimal" Precision="37" Scale="7" StoreGeneratedPattern="Computed" />
+          <Property Name="RetailPrice" Type="decimal" Precision="18" Scale="5" />
+          <Property Name="RetailTotal" Type="decimal" Precision="37" Scale="7" StoreGeneratedPattern="Computed" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="date" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="nvarchar(max)" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="tbl_SubMenu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MenuID" Type="bigint" Nullable="false" />
+          <Property Name="MenuText" Type="nvarchar(max)" />
+          <Property Name="MenuLink" Type="nvarchar(max)" />
+          <Property Name="MenuIco" Type="nvarchar(max)" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="date" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="date" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="tbl_User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleID" Type="bigint" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" />
+          <Property Name="UPassword" Type="nvarchar" MaxLength="50" />
+          <Property Name="UEmail" Type="nvarchar" MaxLength="50" />
+          <Property Name="UCell" Type="nvarchar" MaxLength="50" />
+          <Property Name="UPic" Type="nvarchar(max)" />
+          <Property Name="CreatedDate" Type="date" />
+          <Property Name="ModifiedDate" Type="date" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="tblProject">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Project" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="tblSp">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Sp_text" Type="nvarchar(max)" />
+          <Property Name="PID" Type="bigint" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'dbPOS.dbo.Vu_Category' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Vu_Category">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Category" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="date" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="date" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'dbPOS.dbo.Vu_Items' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Vu_Items">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" Nullable="false" />
+          <Property Name="Category" Type="nvarchar" MaxLength="50" />
+          <Property Name="Items" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="nvarchar" MaxLength="30" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'dbPOS.dbo.Vu_Sales' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Vu_Sales">
+          <Key>
+            <PropertyRef Name="Size" />
+          </Key>
+          <Property Name="Customer" Type="nvarchar" MaxLength="50" />
+          <Property Name="Category" Type="nvarchar" MaxLength="50" />
+          <Property Name="Items" Type="nvarchar" MaxLength="50" />
+          <Property Name="Size" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="GrossTotal" Type="decimal" Precision="18" Scale="5" />
+          <Property Name="GST" Type="decimal" Precision="18" Scale="5" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="5" />
+          <Property Name="PayAmount" Type="decimal" Precision="18" Scale="5" />
+          <Property Name="ReturnAmount" Type="decimal" Precision="19" Scale="5" />
+        </EntityType>
+        <Function Name="sp_add" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Project" Type="nvarchar" Mode="In" />
+          <Parameter Name="SP" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SP_Category" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="bigint" Mode="In" />
+          <Parameter Name="Category" Type="nvarchar" Mode="In" />
+          <Parameter Name="CreatedBy" Type="int" Mode="In" />
+          <Parameter Name="query" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_getsplst" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SP_Items" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="bigint" Mode="In" />
+          <Parameter Name="CatID" Type="int" Mode="In" />
+          <Parameter Name="Items" Type="nvarchar" Mode="In" />
+          <Parameter Name="CreatedBy" Type="int" Mode="In" />
+          <Parameter Name="query" Type="int" Mode="In" />
+        </Function>
+        <Function Name="Sp_Login" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="name" Type="nvarchar" Mode="In" />
+          <Parameter Name="email" Type="nvarchar" Mode="In" />
+          <Parameter Name="password" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SP_Menu" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="bigint" Mode="In" />
+          <Parameter Name="MID" Type="bigint" Mode="In" />
+          <Parameter Name="MenuText" Type="nvarchar" Mode="In" />
+          <Parameter Name="MenuLink" Type="nvarchar" Mode="In" />
+          <Parameter Name="MenuIco" Type="nvarchar" Mode="In" />
+          <Parameter Name="CreatedBy" Type="bigint" Mode="In" />
+          <Parameter Name="query" Type="int" Mode="In" />
+        </Function>
+        <Function Name="Sp_Sales" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="decimal" Mode="In" />
+          <Parameter Name="Sales" Type="decimal" Mode="In" />
+          <Parameter Name="CusID" Type="decimal" Mode="In" />
+          <Parameter Name="CreatedBy" Type="decimal" Mode="In" />
+          <Parameter Name="Payamount" Type="decimal" Mode="In" />
+          <Parameter Name="Returnamount" Type="decimal" Mode="In" />
+          <Parameter Name="query" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_Size" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="bigint" Mode="In" />
+          <Parameter Name="CatID" Type="bigint" Mode="In" />
+          <Parameter Name="ItemID" Type="bigint" Mode="In" />
+          <Parameter Name="Size" Type="nvarchar" Mode="In" />
+          <Parameter Name="Price" Type="decimal" Mode="In" />
+          <Parameter Name="Stock" Type="bigint" Mode="In" />
+          <Parameter Name="RetailPrice" Type="decimal" Mode="In" />
+          <Parameter Name="CreatedBy" Type="int" Mode="In" />
+          <Parameter Name="query" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_user" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="int" Mode="In" />
+          <Parameter Name="name" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="Sp_UserRegistration" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="RoleID" Type="int" Mode="In" />
+          <Parameter Name="name" Type="nvarchar" Mode="In" />
+          <Parameter Name="password" Type="nvarchar" Mode="In" />
+          <Parameter Name="email" Type="nvarchar" Mode="In" />
+          <Parameter Name="cell" Type="nvarchar" Mode="In" />
+          <Parameter Name="pic" Type="nvarchar" Mode="In" />
+          <Parameter Name="query" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SPUserRegistration" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="RoleID" Type="int" Mode="In" />
+          <Parameter Name="name" Type="nvarchar" Mode="In" />
+          <Parameter Name="password" Type="nvarchar" Mode="In" />
+          <Parameter Name="email" Type="nvarchar" Mode="In" />
+          <Parameter Name="cell" Type="nvarchar" Mode="In" />
+          <Parameter Name="pic" Type="nvarchar" Mode="In" />
+          <Parameter Name="query" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="dbPOSModelStoreContainer">
+          <EntitySet Name="tbl_Account" EntityType="Self.tbl_Account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_AccountType" EntityType="Self.tbl_AccountType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_AlertResults" EntityType="Self.tbl_AlertResults" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_AssignMenu" EntityType="Self.tbl_AssignMenu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Customer" EntityType="Self.tbl_Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Deal" EntityType="Self.tbl_Deal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_GST" EntityType="Self.tbl_GST" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_ItemCategory" EntityType="Self.tbl_ItemCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Items" EntityType="Self.tbl_Items" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Menu_Master" EntityType="Self.tbl_Menu_Master" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Role" EntityType="Self.tbl_Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Sales" EntityType="Self.tbl_Sales" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_SalesDetails" EntityType="Self.tbl_SalesDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Size" EntityType="Self.tbl_Size" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_SubMenu" EntityType="Self.tbl_SubMenu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_User" EntityType="Self.tbl_User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblProject" EntityType="Self.tblProject" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblSp" EntityType="Self.tblSp" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vu_Category" EntityType="Self.Vu_Category" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Vu_Category].[ID] AS [ID], 
+    [Vu_Category].[Category] AS [Category], 
+    [Vu_Category].[CreatedBy] AS [CreatedBy], 
+    [Vu_Category].[CreatedDate] AS [CreatedDate], 
+    [Vu_Category].[UpdatedBy] AS [UpdatedBy], 
+    [Vu_Category].[UpdatedDate] AS [UpdatedDate], 
+    [Vu_Category].[IsActive] AS [IsActive]
+    FROM [dbo].[Vu_Category] AS [Vu_Category]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Vu_Items" EntityType="Self.Vu_Items" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Vu_Items].[ID] AS [ID], 
+    [Vu_Items].[Category] AS [Category], 
+    [Vu_Items].[Items] AS [Items], 
+    [Vu_Items].[CreatedBy] AS [CreatedBy], 
+    [Vu_Items].[CreatedDate] AS [CreatedDate], 
+    [Vu_Items].[UpdatedBy] AS [UpdatedBy], 
+    [Vu_Items].[UpdatedDate] AS [UpdatedDate]
+    FROM [dbo].[Vu_Items] AS [Vu_Items]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Vu_Sales" EntityType="Self.Vu_Sales" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Vu_Sales].[Customer] AS [Customer], 
+    [Vu_Sales].[Category] AS [Category], 
+    [Vu_Sales].[Items] AS [Items], 
+    [Vu_Sales].[Size] AS [Size], 
+    [Vu_Sales].[GrossTotal] AS [GrossTotal], 
+    [Vu_Sales].[GST] AS [GST], 
+    [Vu_Sales].[Total] AS [Total], 
+    [Vu_Sales].[PayAmount] AS [PayAmount], 
+    [Vu_Sales].[ReturnAmount] AS [ReturnAmount]
+    FROM [dbo].[Vu_Sales] AS [Vu_Sales]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="dbPOSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tbl_Account">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TransctionID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AccTypeID" Type="Int64" />
+          <Property Name="CusID" Type="Int64" />
+          <Property Name="Debit" Type="Decimal" Precision="18" Scale="5" />
+          <Property Name="Credit" Type="Decimal" Precision="18" Scale="5" />
+        </EntityType>
+        <EntityType Name="tbl_AccountType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" />
+          <Property Name="AccountType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="0" />
+          <Property Name="Updatedby" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="tbl_AlertResults">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Alert" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Tablename" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserID" Type="Int64" />
+          <Property Name="ResultID" Type="Int64" />
+        </EntityType>
+        <EntityType Name="tbl_AssignMenu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MenuID" Type="Int64" />
+          <Property Name="SubMenuID" Type="Int64" />
+          <Property Name="UserID" Type="Int64" />
+          <Property Name="Createdby" Type="Int64" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="0" />
+          <Property Name="UpdaetedBy" Type="Int64" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="tbl_Customer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CusName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CusTypeID" Type="Int64" />
+          <Property Name="CusContact" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Computed" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbl_Deal">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DealType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DealName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DealSize" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DealPrice" Type="Decimal" Precision="18" Scale="5" />
+          <Property Name="CreatedBy" Type="Int64" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int64" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbl_GST">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GST" Type="Decimal" Precision="18" Scale="1" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="0" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="tbl_ItemCategory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="0" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="tbl_Items">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Items" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CatID" Type="Int64" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="0" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="tbl_Menu_Master">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MenuText" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MenuLink" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MenuIco" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="0" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="tbl_Role">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Role" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbl_Sales">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SaleID" Type="Int64" Nullable="false" />
+          <Property Name="CatID" Type="Int64" Nullable="false" />
+          <Property Name="ItemID" Type="Int64" Nullable="false" />
+          <Property Name="SizeID" Type="Int64" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Qty" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Total" Type="Decimal" Precision="37" Scale="4" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="0" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="tbl_SalesDetails">
+          <Key>
+            <PropertyRef Name="SalesID" />
+          </Key>
+          <Property Name="SalesID" Type="Int64" Nullable="false" />
+          <Property Name="CustID" Type="Int64" />
+          <Property Name="GrossTotal" Type="Decimal" Precision="18" Scale="5" />
+          <Property Name="GST" Type="Decimal" Precision="18" Scale="5" />
+          <Property Name="Total" Type="Decimal" Precision="18" Scale="5" />
+          <Property Name="PayAmount" Type="Decimal" Precision="18" Scale="5" />
+          <Property Name="ReturnAmount" Type="Decimal" Precision="18" Scale="5" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="0" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="tbl_Size">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CatID" Type="Int64" Nullable="false" />
+          <Property Name="ItemID" Type="Int64" Nullable="false" />
+          <Property Name="Size" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="5" Nullable="false" />
+          <Property Name="Qty" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="PurchaseTotal" Type="Decimal" Precision="37" Scale="7" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="RetailPrice" Type="Decimal" Precision="18" Scale="5" />
+          <Property Name="RetailTotal" Type="Decimal" Precision="37" Scale="7" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="0" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="tbl_SubMenu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MenuID" Type="Int64" Nullable="false" />
+          <Property Name="MenuText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MenuLink" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MenuIco" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="0" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="tbl_User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleID" Type="Int64" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UCell" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UPic" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="0" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="0" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="tblProject">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Project" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblSp">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Sp_text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PID" Type="Int64" />
+        </EntityType>
+        <EntityType Name="Vu_Category">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="0" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Vu_Items">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" />
+          <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Items" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Vu_Sales">
+          <Key>
+            <PropertyRef Name="Size" />
+          </Key>
+          <Property Name="Customer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Items" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Size" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="GrossTotal" Type="Decimal" Precision="18" Scale="5" />
+          <Property Name="GST" Type="Decimal" Precision="18" Scale="5" />
+          <Property Name="Total" Type="Decimal" Precision="18" Scale="5" />
+          <Property Name="PayAmount" Type="Decimal" Precision="18" Scale="5" />
+          <Property Name="ReturnAmount" Type="Decimal" Precision="19" Scale="5" />
+        </EntityType>
+        <EntityContainer Name="dbPOSEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tbl_Account" EntityType="Self.tbl_Account" />
+          <EntitySet Name="tbl_AccountType" EntityType="Self.tbl_AccountType" />
+          <EntitySet Name="tbl_AlertResults" EntityType="Self.tbl_AlertResults" />
+          <EntitySet Name="tbl_AssignMenu" EntityType="Self.tbl_AssignMenu" />
+          <EntitySet Name="tbl_Customer" EntityType="Self.tbl_Customer" />
+          <EntitySet Name="tbl_Deal" EntityType="Self.tbl_Deal" />
+          <EntitySet Name="tbl_GST" EntityType="Self.tbl_GST" />
+          <EntitySet Name="tbl_ItemCategory" EntityType="Self.tbl_ItemCategory" />
+          <EntitySet Name="tbl_Items" EntityType="Self.tbl_Items" />
+          <EntitySet Name="tbl_Menu_Master" EntityType="Self.tbl_Menu_Master" />
+          <EntitySet Name="tbl_Role" EntityType="Self.tbl_Role" />
+          <EntitySet Name="tbl_Sales" EntityType="Self.tbl_Sales" />
+          <EntitySet Name="tbl_SalesDetails" EntityType="Self.tbl_SalesDetails" />
+          <EntitySet Name="tbl_Size" EntityType="Self.tbl_Size" />
+          <EntitySet Name="tbl_SubMenu" EntityType="Self.tbl_SubMenu" />
+          <EntitySet Name="tbl_User" EntityType="Self.tbl_User" />
+          <EntitySet Name="tblProjects" EntityType="Self.tblProject" />
+          <EntitySet Name="tblSps" EntityType="Self.tblSp" />
+          <EntitySet Name="Vu_Category" EntityType="Self.Vu_Category" />
+          <EntitySet Name="Vu_Items" EntityType="Self.Vu_Items" />
+          <EntitySet Name="Vu_Sales" EntityType="Self.Vu_Sales" />
+          <FunctionImport Name="sp_add" ReturnType="Collection(String)">
+            <Parameter Name="Project" Mode="In" Type="String" />
+            <Parameter Name="SP" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Category" ReturnType="Collection(String)">
+            <Parameter Name="ID" Mode="In" Type="Int64" />
+            <Parameter Name="Category" Mode="In" Type="String" />
+            <Parameter Name="CreatedBy" Mode="In" Type="Int32" />
+            <Parameter Name="query" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_getsplst" ReturnType="Collection(dbPOSModel.sp_getsplst_Result)" />
+          <FunctionImport Name="SP_Items" ReturnType="Collection(String)">
+            <Parameter Name="ID" Mode="In" Type="Int64" />
+            <Parameter Name="CatID" Mode="In" Type="Int32" />
+            <Parameter Name="Items" Mode="In" Type="String" />
+            <Parameter Name="CreatedBy" Mode="In" Type="Int32" />
+            <Parameter Name="query" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Sp_Login" ReturnType="Collection(Int32)">
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Menu" ReturnType="Collection(String)">
+            <Parameter Name="ID" Mode="In" Type="Int64" />
+            <Parameter Name="MID" Mode="In" Type="Int64" />
+            <Parameter Name="MenuText" Mode="In" Type="String" />
+            <Parameter Name="MenuLink" Mode="In" Type="String" />
+            <Parameter Name="MenuIco" Mode="In" Type="String" />
+            <Parameter Name="CreatedBy" Mode="In" Type="Int64" />
+            <Parameter Name="query" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Sp_Sales">
+            <Parameter Name="ID" Mode="In" Type="Decimal" />
+            <Parameter Name="Sales" Mode="In" Type="Decimal" />
+            <Parameter Name="CusID" Mode="In" Type="Decimal" />
+            <Parameter Name="CreatedBy" Mode="In" Type="Decimal" />
+            <Parameter Name="Payamount" Mode="In" Type="Decimal" />
+            <Parameter Name="Returnamount" Mode="In" Type="Decimal" />
+            <Parameter Name="query" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Size" ReturnType="Collection(String)">
+            <Parameter Name="ID" Mode="In" Type="Int64" />
+            <Parameter Name="CatID" Mode="In" Type="Int64" />
+            <Parameter Name="ItemID" Mode="In" Type="Int64" />
+            <Parameter Name="Size" Mode="In" Type="String" />
+            <Parameter Name="Price" Mode="In" Type="Decimal" />
+            <Parameter Name="Stock" Mode="In" Type="Int64" />
+            <Parameter Name="RetailPrice" Mode="In" Type="Decimal" />
+            <Parameter Name="CreatedBy" Mode="In" Type="Int32" />
+            <Parameter Name="query" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_user">
+            <Parameter Name="Id" Mode="In" Type="Int32" />
+            <Parameter Name="name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Sp_UserRegistration" ReturnType="Collection(String)">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="RoleID" Mode="In" Type="Int32" />
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="String" />
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="cell" Mode="In" Type="String" />
+            <Parameter Name="pic" Mode="In" Type="String" />
+            <Parameter Name="query" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SPUserRegistration" ReturnType="Collection(String)">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="RoleID" Mode="In" Type="Int32" />
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="String" />
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="cell" Mode="In" Type="String" />
+            <Parameter Name="pic" Mode="In" Type="String" />
+            <Parameter Name="query" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="sp_getsplst_Result">
+          <Property Type="Int64" Name="PID" Nullable="true" />
+          <Property Type="Int64" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Sp" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="dbPOSModelStoreContainer" CdmEntityContainer="dbPOSEntities1">
+          <EntitySetMapping Name="tbl_Account">
+            <EntityTypeMapping TypeName="dbPOSModel.tbl_Account">
+              <MappingFragment StoreEntitySet="tbl_Account">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TransctionID" ColumnName="TransctionID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="AccTypeID" ColumnName="AccTypeID" />
+                <ScalarProperty Name="CusID" ColumnName="CusID" />
+                <ScalarProperty Name="Debit" ColumnName="Debit" />
+                <ScalarProperty Name="Credit" ColumnName="Credit" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_AccountType">
+            <EntityTypeMapping TypeName="dbPOSModel.tbl_AccountType">
+              <MappingFragment StoreEntitySet="tbl_AccountType">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="AccountType" ColumnName="AccountType" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Updatedby" ColumnName="Updatedby" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_AlertResults">
+            <EntityTypeMapping TypeName="dbPOSModel.tbl_AlertResults">
+              <MappingFragment StoreEntitySet="tbl_AlertResults">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Alert" ColumnName="Alert" />
+                <ScalarProperty Name="Tablename" ColumnName="Tablename" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ResultID" ColumnName="ResultID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_AssignMenu">
+            <EntityTypeMapping TypeName="dbPOSModel.tbl_AssignMenu">
+              <MappingFragment StoreEntitySet="tbl_AssignMenu">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="MenuID" ColumnName="MenuID" />
+                <ScalarProperty Name="SubMenuID" ColumnName="SubMenuID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Createdby" ColumnName="Createdby" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdaetedBy" ColumnName="UpdaetedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Customer">
+            <EntityTypeMapping TypeName="dbPOSModel.tbl_Customer">
+              <MappingFragment StoreEntitySet="tbl_Customer">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CusName" ColumnName="CusName" />
+                <ScalarProperty Name="CusTypeID" ColumnName="CusTypeID" />
+                <ScalarProperty Name="CusContact" ColumnName="CusContact" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Deal">
+            <EntityTypeMapping TypeName="dbPOSModel.tbl_Deal">
+              <MappingFragment StoreEntitySet="tbl_Deal">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="DealType" ColumnName="DealType" />
+                <ScalarProperty Name="DealName" ColumnName="DealName" />
+                <ScalarProperty Name="DealSize" ColumnName="DealSize" />
+                <ScalarProperty Name="DealPrice" ColumnName="DealPrice" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_GST">
+            <EntityTypeMapping TypeName="dbPOSModel.tbl_GST">
+              <MappingFragment StoreEntitySet="tbl_GST">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="GST" ColumnName="GST" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_ItemCategory">
+            <EntityTypeMapping TypeName="dbPOSModel.tbl_ItemCategory">
+              <MappingFragment StoreEntitySet="tbl_ItemCategory">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Items">
+            <EntityTypeMapping TypeName="dbPOSModel.tbl_Items">
+              <MappingFragment StoreEntitySet="tbl_Items">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Items" ColumnName="Items" />
+                <ScalarProperty Name="CatID" ColumnName="CatID" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Menu_Master">
+            <EntityTypeMapping TypeName="dbPOSModel.tbl_Menu_Master">
+              <MappingFragment StoreEntitySet="tbl_Menu_Master">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="MenuText" ColumnName="MenuText" />
+                <ScalarProperty Name="MenuLink" ColumnName="MenuLink" />
+                <ScalarProperty Name="MenuIco" ColumnName="MenuIco" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Role">
+            <EntityTypeMapping TypeName="dbPOSModel.tbl_Role">
+              <MappingFragment StoreEntitySet="tbl_Role">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Sales">
+            <EntityTypeMapping TypeName="dbPOSModel.tbl_Sales">
+              <MappingFragment StoreEntitySet="tbl_Sales">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="SaleID" ColumnName="SaleID" />
+                <ScalarProperty Name="CatID" ColumnName="CatID" />
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+                <ScalarProperty Name="SizeID" ColumnName="SizeID" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_SalesDetails">
+            <EntityTypeMapping TypeName="dbPOSModel.tbl_SalesDetails">
+              <MappingFragment StoreEntitySet="tbl_SalesDetails">
+                <ScalarProperty Name="SalesID" ColumnName="SalesID" />
+                <ScalarProperty Name="CustID" ColumnName="CustID" />
+                <ScalarProperty Name="GrossTotal" ColumnName="GrossTotal" />
+                <ScalarProperty Name="GST" ColumnName="GST" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="PayAmount" ColumnName="PayAmount" />
+                <ScalarProperty Name="ReturnAmount" ColumnName="ReturnAmount" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Size">
+            <EntityTypeMapping TypeName="dbPOSModel.tbl_Size">
+              <MappingFragment StoreEntitySet="tbl_Size">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CatID" ColumnName="CatID" />
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="PurchaseTotal" ColumnName="PurchaseTotal" />
+                <ScalarProperty Name="RetailPrice" ColumnName="RetailPrice" />
+                <ScalarProperty Name="RetailTotal" ColumnName="RetailTotal" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_SubMenu">
+            <EntityTypeMapping TypeName="dbPOSModel.tbl_SubMenu">
+              <MappingFragment StoreEntitySet="tbl_SubMenu">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="MenuID" ColumnName="MenuID" />
+                <ScalarProperty Name="MenuText" ColumnName="MenuText" />
+                <ScalarProperty Name="MenuLink" ColumnName="MenuLink" />
+                <ScalarProperty Name="MenuIco" ColumnName="MenuIco" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_User">
+            <EntityTypeMapping TypeName="dbPOSModel.tbl_User">
+              <MappingFragment StoreEntitySet="tbl_User">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="UPassword" ColumnName="UPassword" />
+                <ScalarProperty Name="UEmail" ColumnName="UEmail" />
+                <ScalarProperty Name="UCell" ColumnName="UCell" />
+                <ScalarProperty Name="UPic" ColumnName="UPic" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblProjects">
+            <EntityTypeMapping TypeName="dbPOSModel.tblProject">
+              <MappingFragment StoreEntitySet="tblProject">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Project" ColumnName="Project" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblSps">
+            <EntityTypeMapping TypeName="dbPOSModel.tblSp">
+              <MappingFragment StoreEntitySet="tblSp">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Sp_text" ColumnName="Sp_text" />
+                <ScalarProperty Name="PID" ColumnName="PID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vu_Category">
+            <EntityTypeMapping TypeName="dbPOSModel.Vu_Category">
+              <MappingFragment StoreEntitySet="Vu_Category">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vu_Items">
+            <EntityTypeMapping TypeName="dbPOSModel.Vu_Items">
+              <MappingFragment StoreEntitySet="Vu_Items">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Items" ColumnName="Items" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vu_Sales">
+            <EntityTypeMapping TypeName="dbPOSModel.Vu_Sales">
+              <MappingFragment StoreEntitySet="Vu_Sales">
+                <ScalarProperty Name="Customer" ColumnName="Customer" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Items" ColumnName="Items" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+                <ScalarProperty Name="GrossTotal" ColumnName="GrossTotal" />
+                <ScalarProperty Name="GST" ColumnName="GST" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="PayAmount" ColumnName="PayAmount" />
+                <ScalarProperty Name="ReturnAmount" ColumnName="ReturnAmount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_add" FunctionName="dbPOSModel.Store.sp_add" />
+          <FunctionImportMapping FunctionImportName="SP_Category" FunctionName="dbPOSModel.Store.SP_Category" />
+          <FunctionImportMapping FunctionImportName="sp_getsplst" FunctionName="dbPOSModel.Store.sp_getsplst">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="dbPOSModel.sp_getsplst_Result">
+                <ScalarProperty Name="PID" ColumnName="PID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Sp" ColumnName="Sp" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_Items" FunctionName="dbPOSModel.Store.SP_Items" />
+          <FunctionImportMapping FunctionImportName="Sp_Login" FunctionName="dbPOSModel.Store.Sp_Login" />
+          <FunctionImportMapping FunctionImportName="SP_Menu" FunctionName="dbPOSModel.Store.SP_Menu" />
+          <FunctionImportMapping FunctionImportName="Sp_Sales" FunctionName="dbPOSModel.Store.Sp_Sales" />
+          <FunctionImportMapping FunctionImportName="SP_Size" FunctionName="dbPOSModel.Store.SP_Size" />
+          <FunctionImportMapping FunctionImportName="sp_user" FunctionName="dbPOSModel.Store.sp_user" />
+          <FunctionImportMapping FunctionImportName="Sp_UserRegistration" FunctionName="dbPOSModel.Store.Sp_UserRegistration" />
+          <FunctionImportMapping FunctionImportName="SPUserRegistration" FunctionName="dbPOSModel.Store.SPUserRegistration" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
